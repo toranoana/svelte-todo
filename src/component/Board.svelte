@@ -19,39 +19,40 @@
     },
     {
       class: "trashbox",
-      title: "TRASHBOX",
+      title: "TRASHBOX (10件まで保持できます)",
       filterFunc: (t: Todo) => t.deleted,
       wide: true,
       component: TrashedList,
     },
   ];
 
-  function handleToggleStatus(e: CustomEvent) {
+  const handleToggleStatus = (e: CustomEvent) => {
     toggle(e.detail.target);
-  }
+  };
 
-  function handleRemove(e: CustomEvent) {
+  const handleRemove = (e: CustomEvent) => {
     remove(e.detail.target);
-  }
+  };
 
-  function handleRevive(e: CustomEvent) {
+  const handleRevive = (e: CustomEvent) => {
     revive(e.detail.target);
-  }
+  };
 
-  function remove(todo: Todo) {
+  const remove = (todo: Todo) => {
     todo.deleted = true;
+    todos.delete_overflow_trash();
     todos.reload();
-  }
+  };
 
-  function revive(todo: Todo) {
+  const revive = (todo: Todo) => {
     todo.deleted = false;
     todos.reload();
-  }
+  };
 
-  function toggle(todo: Todo) {
+  const toggle = (todo: Todo) => {
     todo.done = !todo.done;
     todos.reload();
-  }
+  };
 </script>
 
 <div class="board">
@@ -74,15 +75,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1.5em;
-    max-width: 36em;
-    min-width: 36em;
+    max-width: 45em;
+    min-width: 45em;
     margin: 10px auto 50px;
   }
   .board > .list-container.wide {
     grid-column: 1 / 3;
   }
 
-  @media (max-width: 36em) {
+  @media (max-width: 45em) {
     .board {
       grid-template-columns: 1fr;
     }

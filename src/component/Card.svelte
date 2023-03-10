@@ -7,17 +7,17 @@
   let checked: boolean;
   const dispatch = createEventDispatcher();
 
-  function triggerToggleStatus() {
+  const triggerToggleStatus = () => {
     dispatch("toggleStatus", {
       target: todo,
     });
-  }
+  };
 
-  function triggerRemove() {
+  const triggerRemove = () => {
     dispatch("remove", {
       target: todo,
     });
-  }
+  };
 
   $: checked = todo.done;
 </script>

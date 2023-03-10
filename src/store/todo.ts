@@ -14,6 +14,7 @@ export type TodosStore = {
   init: () => string;
   add: (todo: Todo) => void;
   reload: () => void;
+  delete_overflow_trash: () => void;
 };
 
 const default_todos: Todo[] = [
@@ -25,7 +26,7 @@ const default_todos: Todo[] = [
   },
 ];
 
-function createTodosStore(defaults: Todo[] = []): TodosStore {
+const createTodosStore = (defaults: Todo[] = []): TodosStore => {
   const { subscribe, set, update } = writable<Todo[]>(defaults);
 
   const init = (): string => {
@@ -48,13 +49,26 @@ function createTodosStore(defaults: Todo[] = []): TodosStore {
     update((t: Todo[]) => t);
   };
 
+  const delete_overflow_trash = (): void => {
+    let count = 0;
+    update((t: Todo[]) => {
+      return t.filter((todo: Todo) => {
+        if (!todo.deleted) {
+          return true;
+        }
+        count++;
+        return count <= 10;
+      });
+    });
+  };
+
   return {
     subscribe,
     init,
     add,
     reload,
+    delete_overflow_trash,
   };
-}
+};
 
 export const todos: TodosStore = createTodosStore(default_todos);
-

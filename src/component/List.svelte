@@ -12,7 +12,11 @@
 
 <div class="list">
   {#each items as item (item.id)}
-    <div in:slide={{duration: 600}} out:scale={{duration: 600}} animate:flip={{ duration: 200 }}>
+    <div
+      in:slide={{ duration: 600 }}
+      out:scale={{ duration: 600 }}
+      animate:flip={{ duration: 200 }}
+    >
       <Card todo={item} on:toggleStatus on:remove />
     </div>
   {/each}
@@ -21,5 +25,7 @@
 <style>
   .list {
     min-height: 20em;
+    max-height: 38.5em;
+    overflow-y: scroll;
   }
 </style>

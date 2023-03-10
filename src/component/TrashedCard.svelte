@@ -6,7 +6,7 @@
 
   const dispatch = createEventDispatcher();
 
-  function triggerRevive() {
+  const triggerRevive = () => {
     dispatch("revive", {
       target: todo,
     });
