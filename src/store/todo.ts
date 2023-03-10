@@ -50,14 +50,16 @@ const createTodosStore = (defaults: Todo[] = []): TodosStore => {
   };
 
   const delete_overflow_trash = (): void => {
-    let count = 0;
     update((t: Todo[]) => {
+      let delete_count = t.filter((todo: Todo) => {
+        return todo.deleted;
+      }).length;
       return t.filter((todo: Todo) => {
         if (!todo.deleted) {
           return true;
         }
-        count++;
-        return count <= 10;
+        delete_count--;
+        return delete_count < 10;
       });
     });
   };
