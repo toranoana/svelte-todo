@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
+import { loadTodos } from "/src/lib/storage.ts";
 
 export type Todo = {
   id: number;
@@ -9,7 +10,8 @@ export type Todo = {
 };
 
 export type TodosStore = {
-  subscribe: Writable<Todo[]>["subscripbe"];
+  subscribe: Writable<Todo[]>["subscribe"];
+  init: () => string;
   add: (todo: Todo) => void;
   reload: () => void;
 };
@@ -24,7 +26,17 @@ const default_todos: Todo[] = [
 ];
 
 function createTodosStore(defaults: Todo[] = []): TodosStore {
-  const { subscribe, update } = writable<Todo[]>(defaults);
+  const { subscribe, set, update } = writable<Todo[]>(defaults);
+
+  const init = (): string => {
+    const savedTodos = loadTodos();
+    if (savedTodos.length) {
+      set(savedTodos);
+      return "";
+    }
+
+    return "このブラウザではToDoの保存と読み込みができません。";
+  };
 
   const add = (todo: Todo) => {
     update((t: Todo[]) => {
@@ -38,9 +50,11 @@ function createTodosStore(defaults: Todo[] = []): TodosStore {
 
   return {
     subscribe,
+    init,
     add,
     reload,
   };
 }
 
 export const todos: TodosStore = createTodosStore(default_todos);
+
