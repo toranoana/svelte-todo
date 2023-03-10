@@ -7,7 +7,7 @@
     if (!(input instanceof HTMLInputElement)) {
       return;
     }
-    if(!input.value){
+    if (!input.value) {
       return;
     }
 
@@ -20,13 +20,19 @@
     });
     input.value = null;
   }
+
+  function handleCreateSubmit(e: KeyboardEvent) {
+    if (e.key === "Enter" && e.shiftKey) {
+      create(e.target);
+    }
+  }
 </script>
 
 <main>
   <div class="form">
     <input
-      placeholder="TODOを入力(Enter または ボタンで作成)"
-      on:keydown={(e) => e.key === "Enter" && create(e.target)}
+      placeholder="TODOを入力(Shift + Enterで作成)"
+      on:keydown={handleCreateSubmit}
     />
   </div>
 
