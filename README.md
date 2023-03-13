@@ -1,4 +1,6 @@
-# Vite + Deno + Svelte + TypeScript
+# Todo app(Vite + Deno + Svelte + TypeScript)
+
+技術書展用に作成したTodoアプリです。
 
 ## Running
 
