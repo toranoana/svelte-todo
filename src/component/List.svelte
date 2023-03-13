@@ -1,8 +1,5 @@
 <script lang="ts">
   import { slide, scale } from "svelte/transition";
-  import { quintIn } from "svelte/easing";
-  import { crossfade } from "svelte/transition";
-
   import { flip } from "svelte/animate";
 
   import Card from "./Card.svelte";
